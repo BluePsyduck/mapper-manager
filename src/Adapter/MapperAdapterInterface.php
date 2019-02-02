@@ -15,10 +15,10 @@ use BluePsyduck\MapperManager\Mapper\MapperInterface;
 interface MapperAdapterInterface
 {
     /**
-     * Returns the interface which this adapter will handle.
+     * Returns the mapper interface which this adapter will handle.
      * @return string
      */
-    public function getHandledInterface(): string;
+    public function getHandledMapperInterface(): string;
 
     /**
      * Adds a mapper to the adapter.

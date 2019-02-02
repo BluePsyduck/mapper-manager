@@ -27,7 +27,7 @@ class MapperManagerFactory
     public function __invoke(
         ContainerInterface $container,
         string $requestedName,
-        array $options = null
+        ?array $options = null
     ): MapperManagerInterface {
         $config = $container->get('config');
 

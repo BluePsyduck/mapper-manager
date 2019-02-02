@@ -21,10 +21,10 @@ class StaticMapperAdapter implements MapperAdapterInterface
     protected $mappers = [];
 
     /**
-     * Returns the interface which this adapter will handle.
+     * Returns the mapper interface which this adapter will handle.
      * @return string
      */
-    public function getHandledInterface(): string
+    public function getHandledMapperInterface(): string
     {
         return StaticMapperInterface::class;
     }
@@ -35,11 +35,11 @@ class StaticMapperAdapter implements MapperAdapterInterface
      */
     public function addMapper($mapper): void
     {
-        $sourceClass = $mapper->getSourceClass();
-        if (!isset($this->staticMappers[$sourceClass])) {
+        $sourceClass = $mapper->getSupportedSourceClass();
+        if (!isset($this->mappers[$sourceClass])) {
             $this->mappers[$sourceClass] = [];
         }
-        $this->mappers[$sourceClass][$mapper->getDestinationClass()] = $mapper;
+        $this->mappers[$sourceClass][$mapper->getSupportedDestinationClass()] = $mapper;
     }
 
     /**
@@ -53,11 +53,11 @@ class StaticMapperAdapter implements MapperAdapterInterface
         $sourceClass = get_class($source);
         $destinationClass = get_class($destination);
 
-        $result = false;
-        if (isset($this->staticMappers[$sourceClass][$destinationClass])) {
+        if (isset($this->mappers[$sourceClass][$destinationClass])) {
             $this->mappers[$sourceClass][$destinationClass]->map($source, $destination);
-            $result = true;
+            return true;
         }
-        return $result;
+
+        return false;
     }
 }

@@ -12,6 +12,15 @@ namespace BluePsyduck\MapperManager\Mapper;
  */
 interface StaticMapperInterface extends MapperInterface
 {
-    public function getSourceClass(): string;
-    public function getDestinationClass(): string;
+    /**
+     * Returns the source class supported by this mapper.
+     * @return string
+     */
+    public function getSupportedSourceClass(): string;
+
+    /**
+     * Returns the destination class supported by this mapper.
+     * @return string
+     */
+    public function getSupportedDestinationClass(): string;
 }

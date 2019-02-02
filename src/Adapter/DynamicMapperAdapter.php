@@ -24,7 +24,7 @@ class DynamicMapperAdapter implements MapperAdapterInterface
      * Returns the mapper interface which this adapter will handle.
      * @return string
      */
-    public function getHandledInterface(): string
+    public function getHandledMapperInterface(): string
     {
         return DynamicMapperInterface::class;
     }
@@ -46,14 +46,12 @@ class DynamicMapperAdapter implements MapperAdapterInterface
      */
     public function map($source, $destination): bool
     {
-        $result = false;
         foreach ($this->mappers as $mapper) {
             if ($mapper->supports($source, $destination)) {
                 $mapper->map($source, $destination);
-                $result = true;
-                break;
+                return true;
             }
         }
-        return $result;
+        return false;
     }
 }

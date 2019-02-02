@@ -30,7 +30,7 @@ class MapperManager implements MapperManagerInterface
      */
     public function addAdapter(MapperAdapterInterface $adapter): void
     {
-        $this->adapters[$adapter->getHandledInterface()] = $adapter;
+        $this->adapters[$adapter->getHandledMapperInterface()] = $adapter;
     }
 
     /**
@@ -40,9 +40,9 @@ class MapperManager implements MapperManagerInterface
      */
     public function addMapper(MapperInterface $mapper): void
     {
-        foreach ($this->adapters as $interface => $handler) {
-            if ($mapper instanceof $interface) {
-                $handler->addMapper($mapper);
+        foreach ($this->adapters as $handledMapperInterface => $adapter) {
+            if ($mapper instanceof $handledMapperInterface) {
+                $adapter->addMapper($mapper);
                 return;
             }
         }
