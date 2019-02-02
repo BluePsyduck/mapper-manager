@@ -8,12 +8,12 @@ use InvalidArgumentException;
 use Throwable;
 
 /**
- * The exception thrown when an invalid mapper is tried to be added to the manager.
+ * The exception thrown when a mapper cannot be assigned to any adapter.
  *
  * @author BluePsyduck <bluepsyduck@gmx.com>
  * @license http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-class InvalidMapperException extends InvalidArgumentException implements MapperException
+class MissingAdapterException extends InvalidArgumentException implements MapperException
 {
     /**
      * Initializes the exception.
@@ -23,7 +23,7 @@ class InvalidMapperException extends InvalidArgumentException implements MapperE
     public function __construct(string $mapperClass, ?Throwable $previous = null)
     {
         parent::__construct(sprintf(
-            'Invalid mapper class: %s. The class must implement one of the derived mapper interfaces.',
+            'No adapter has been added to handle the mapper %s.',
             $mapperClass
         ), 0, $previous);
     }

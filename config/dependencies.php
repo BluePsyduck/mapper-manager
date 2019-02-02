@@ -16,5 +16,9 @@ return [
         'factories' => [
             MapperManagerInterface::class => MapperManagerFactory::class,
         ],
+        'invokables' => [
+            Adapter\DynamicMapperAdapter::class,
+            Adapter\StaticMapperAdapter::class,
+        ],
     ],
 ];

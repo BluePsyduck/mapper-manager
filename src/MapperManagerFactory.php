@@ -32,20 +32,36 @@ class MapperManagerFactory
         $config = $container->get('config');
 
         $manager = new MapperManager();
+        $this->addAdaptersToManager($manager, $container, $config);
         $this->addMappersToManager($manager, $container, $config);
-
         return $manager;
     }
 
     /**
+     * Adds the adapters from the config to the manager.
+     * @param MapperManager $manager
+     * @param ContainerInterface $container
+     * @param array|string[] $config
+     */
+    protected function addAdaptersToManager(
+        MapperManager $manager,
+        ContainerInterface $container,
+        array $config
+    ): void {
+        foreach ($config[ConfigKey::MAIN][ConfigKey::ADAPTERS] ?? [] as $alias) {
+            $manager->addAdapter($container->get($alias));
+        }
+    }
+
+    /**
      * Adds the mappers from the config to the manager.
-     * @param MapperManagerInterface $manager
+     * @param MapperManager $manager
      * @param ContainerInterface $container
      * @param array|string[] $config
      * @throws MapperException
      */
-    public function addMappersToManager(
-        MapperManagerInterface $manager,
+    protected function addMappersToManager(
+        MapperManager $manager,
         ContainerInterface $container,
         array $config
     ): void {

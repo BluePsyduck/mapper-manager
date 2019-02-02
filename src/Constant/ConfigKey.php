@@ -18,6 +18,11 @@ interface ConfigKey
     public const MAIN = 'mapper-manager';
 
     /**
+     * The key containing the aliases of the adapters to add to the manager.
+     */
+    public const ADAPTERS = 'adapters';
+
+    /**
      * The key containing the aliases of the mappers to add to the manager.
      */
     public const MAPPERS = 'mappers';

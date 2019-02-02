@@ -15,6 +15,10 @@ use BluePsyduck\MapperManager\Constant\ConfigKey;
 
 return [
     ConfigKey::MAIN => [
+        ConfigKey::ADAPTERS => [
+            Adapter\StaticMapperAdapter::class,
+            Adapter\DynamicMapperAdapter::class,
+        ],
         ConfigKey::MAPPERS => [
             // MyFancyMapper::class,
         ],
