@@ -13,6 +13,9 @@ namespace BluePsyduck\MapperManager;
 
 return [
     'dependencies' => [
+        'aliases' => [
+            MapperManager::class => MapperManagerInterface::class,
+        ],
         'factories' => [
             MapperManagerInterface::class => MapperManagerFactory::class,
         ],

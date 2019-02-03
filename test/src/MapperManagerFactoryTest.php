@@ -79,6 +79,7 @@ class MapperManagerFactoryTest extends TestCase
                 ConfigKey::ADAPTERS => [
                     'foo',
                     'bar',
+                    'foo',
                 ],
             ],
         ];
@@ -126,6 +127,7 @@ class MapperManagerFactoryTest extends TestCase
                 ConfigKey::MAPPERS => [
                     'foo',
                     'bar',
+                    'foo',
                 ],
             ],
         ];

@@ -48,7 +48,7 @@ class MapperManagerFactory
         ContainerInterface $container,
         array $config
     ): void {
-        foreach ($config[ConfigKey::MAIN][ConfigKey::ADAPTERS] ?? [] as $alias) {
+        foreach (array_unique($config[ConfigKey::MAIN][ConfigKey::ADAPTERS] ?? []) as $alias) {
             $manager->addAdapter($container->get($alias));
         }
     }
@@ -65,7 +65,7 @@ class MapperManagerFactory
         ContainerInterface $container,
         array $config
     ): void {
-        foreach ($config[ConfigKey::MAIN][ConfigKey::MAPPERS] ?? [] as $alias) {
+        foreach (array_unique($config[ConfigKey::MAIN][ConfigKey::MAPPERS] ?? []) as $alias) {
             $manager->addMapper($container->get($alias));
         }
     }
