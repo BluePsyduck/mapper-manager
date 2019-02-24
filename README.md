@@ -13,6 +13,9 @@ The mapper supports different types of mappers, which have the difference in how
 a certain pair of objects or not. Each type of mapper comes with an interface and a corresponding adapter for the
 manager to handle this type of mappers. New types can always be added in the client code if there is a need for them.
 
+If a mapper requires access to the `MapperManager` to e.g. map other objects, you have to implement the 
+`MapperManagerAwareInterface` to have it get injected into your mapper instance to avoid having circular dependencies. 
+
 ### Static Mapper
 
 A static mapper implementing the `StaticMapperInterface` knows the combination of source and destination object it 

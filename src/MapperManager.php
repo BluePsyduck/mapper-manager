@@ -30,6 +30,7 @@ class MapperManager implements MapperManagerInterface
      */
     public function addAdapter(MapperAdapterInterface $adapter): void
     {
+        $this->injectMapperManager($adapter);
         $this->adapters[$adapter->getHandledMapperInterface()] = $adapter;
     }
 
@@ -40,6 +41,7 @@ class MapperManager implements MapperManagerInterface
      */
     public function addMapper(MapperInterface $mapper): void
     {
+        $this->injectMapperManager($mapper);
         foreach ($this->adapters as $handledMapperInterface => $adapter) {
             if ($mapper instanceof $handledMapperInterface) {
                 $adapter->addMapper($mapper);
@@ -66,5 +68,16 @@ class MapperManager implements MapperManagerInterface
         }
 
         throw new MissingMapperException(get_class($source), get_class($destination));
+    }
+
+    /**
+     * Injects the mapper manager if the object is accepting it.
+     * @param object $object
+     */
+    protected function injectMapperManager($object): void
+    {
+        if ($object instanceof MapperManagerAwareInterface) {
+            $object->setMapperManager($this);
+        }
     }
 }

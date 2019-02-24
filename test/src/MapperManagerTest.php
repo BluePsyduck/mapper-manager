@@ -12,6 +12,7 @@ use BluePsyduck\MapperManager\Exception\MissingMapperException;
 use BluePsyduck\MapperManager\Mapper\MapperInterface;
 use BluePsyduck\MapperManager\Mapper\StaticMapperInterface;
 use BluePsyduck\MapperManager\MapperManager;
+use BluePsyduck\MapperManager\MapperManagerAwareInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
@@ -44,7 +45,13 @@ class MapperManagerTest extends TestCase
                  ->method('getHandledMapperInterface')
                  ->willReturn('bar');
 
-        $manager = new MapperManager();
+        /* @var MapperManager&MockObject $manager */
+        $manager = $this->getMockBuilder(MapperManager::class)
+                        ->setMethods(['injectMapperManager'])
+                        ->getMock();
+        $manager->expects($this->once())
+                ->method('injectMapperManager')
+                ->with($this->identicalTo($adapter2));
         $this->injectProperty($manager, 'adapters', ['foo' => $adapter1]);
 
         $manager->addAdapter($adapter2);
@@ -84,7 +91,13 @@ class MapperManagerTest extends TestCase
             StaticMapperInterface::class => $adapter3, // Second match will be ignored.
         ];
 
-        $manager = new MapperManager();
+        /* @var MapperManager&MockObject $manager */
+        $manager = $this->getMockBuilder(MapperManager::class)
+                        ->setMethods(['injectMapperManager'])
+                        ->getMock();
+        $manager->expects($this->once())
+                ->method('injectMapperManager')
+                ->with($this->identicalTo($mapper));
         $this->injectProperty($manager, 'adapters', $adapters);
 
         $manager->addMapper($mapper);
@@ -106,7 +119,13 @@ class MapperManagerTest extends TestCase
         $adapter->expects($this->never())
                 ->method('addMapper');
 
-        $manager = new MapperManager();
+        /* @var MapperManager&MockObject $manager */
+        $manager = $this->getMockBuilder(MapperManager::class)
+                        ->setMethods(['injectMapperManager'])
+                        ->getMock();
+        $manager->expects($this->once())
+                ->method('injectMapperManager')
+                ->with($this->identicalTo($mapper));
         $this->injectProperty($manager, 'adapters', ['foo' => $adapter]);
 
         $this->expectException(MissingAdapterException::class);
@@ -174,5 +193,40 @@ class MapperManagerTest extends TestCase
         $this->expectException(MissingMapperException::class);
 
         $manager->map($source, $destination);
+    }
+
+    /**
+     * Tests the injectMapperManager method with implementing the interface.
+     * @throws ReflectionException
+     * @covers ::injectMapperManager
+     */
+    public function testInjectMapperManagerWithInterface(): void
+    {
+        /* @var MapperManagerAwareInterface&MockObject $object */
+        $object = $this->createMock(MapperManagerAwareInterface::class);
+
+        $manager = new MapperManager();
+
+        $object->expects($this->once())
+               ->method('setMapperManager')
+               ->with($manager);
+
+        $this->invokeMethod($manager, 'injectMapperManager', $object);
+    }
+
+    /**
+     * Tests the injectMapperManager method.
+     * @throws ReflectionException
+     * @covers ::injectMapperManager
+     */
+    public function testInjectMapperManagerWithoutInterface(): void
+    {
+        /* @var MapperManagerAwareInterface&MockObject $object */
+        $object = $this->createMock(stdClass::class);
+
+        $manager = new MapperManager();
+        $this->invokeMethod($manager, 'injectMapperManager', $object);
+
+        $this->expectNotToPerformAssertions();
     }
 }
