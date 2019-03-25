@@ -20,8 +20,8 @@ return [
             MapperManagerInterface::class => MapperManagerFactory::class,
         ],
         'invokables' => [
-            Adapter\DynamicMapperAdapter::class,
-            Adapter\StaticMapperAdapter::class,
+            Adapter\DynamicMapperAdapter::class => Adapter\DynamicMapperAdapter::class,
+            Adapter\StaticMapperAdapter::class => Adapter\StaticMapperAdapter::class,
         ],
     ],
 ];
