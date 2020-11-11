@@ -20,7 +20,7 @@ class MapperManagerFactory
      * Creates the mapper manager.
      * @param ContainerInterface $container
      * @param string $requestedName
-     * @param array|null $options
+     * @param array<mixed>|null $options
      * @return MapperManagerInterface
      * @throws MapperException
      */
@@ -41,7 +41,7 @@ class MapperManagerFactory
      * Adds the adapters from the config to the manager.
      * @param MapperManager $manager
      * @param ContainerInterface $container
-     * @param array|string[] $config
+     * @param array<mixed> $config
      */
     protected function addAdaptersToManager(
         MapperManager $manager,
@@ -57,7 +57,7 @@ class MapperManagerFactory
      * Adds the mappers from the config to the manager.
      * @param MapperManager $manager
      * @param ContainerInterface $container
-     * @param array|string[] $config
+     * @param array<mixed> $config
      * @throws MapperException
      */
     protected function addMappersToManager(

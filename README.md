@@ -1,9 +1,9 @@
 # Mapper Manager
 
-[![Latest Stable Version](https://poser.pugx.org/bluepsyduck/mapper-manager/v/stable)](https://packagist.org/packages/bluepsyduck/mapper-manager)
-[![License](https://poser.pugx.org/bluepsyduck/mapper-manager/license)](https://packagist.org/packages/bluepsyduck/mapper-manager)
-[![Build Status](https://travis-ci.com/BluePsyduck/mapper-manager.svg?branch=master)](https://travis-ci.com/BluePsyduck/mapper-manager)
-[![codecov](https://codecov.io/gh/BluePsyduck/mapper-manager/branch/master/graph/badge.svg)](https://codecov.io/gh/BluePsyduck/mapper-manager)
+[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/BluePsyduck/mapper-manager)](https://github.com/BluePsyduck/mapper-manager/releases)
+[![GitHub](https://img.shields.io/github/license/BluePsyduck/mapper-manager)](LICENSE.md)
+[![build](https://img.shields.io/github/workflow/status/BluePsyduck/mapper-manager/CI?logo=github)](https://github.com/BluePsyduck/mapper-manager/actions)
+[![Codecov](https://img.shields.io/codecov/c/gh/BluePsyduck/mapper-manager?logo=codecov)](https://codecov.io/gh/BluePsyduck/mapper-manager)
 
 The Mapper Manager is, as the name already suggests, a manager of mappers between different types of objects. 
 

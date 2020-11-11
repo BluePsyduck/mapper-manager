@@ -14,7 +14,7 @@ class ConfigProvider
 {
     /**
      * Returns the config of the mapper manager.
-     * @return array
+     * @return array<mixed>
      */
     public function __invoke(): array
     {
