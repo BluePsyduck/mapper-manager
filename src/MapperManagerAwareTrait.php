@@ -10,9 +10,13 @@ namespace BluePsyduck\MapperManager;
  * @author BluePsyduck <bluepsyduck@gmx.com>
  * @license http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-trait MapperManagerAwareTrait /* implements MapperManagerAwareInterface */
+trait MapperManagerAwareTrait
 {
-    protected /* MapperManagerInterface */ $mapperManager;
+    /**
+     * The mapper manager.
+     * @var MapperManagerInterface
+     */
+    protected $mapperManager;
 
     public function setMapperManager(MapperManagerInterface $mapperManager): void
     {
