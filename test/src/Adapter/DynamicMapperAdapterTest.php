@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace BluePsyduckTest\MapperManager\Adapter;
 
-use BluePsyduck\Common\Test\ReflectionTrait;
 use BluePsyduck\MapperManager\Adapter\DynamicMapperAdapter;
 use BluePsyduck\MapperManager\Mapper\DynamicMapperInterface;
-use PHPUnit\Framework\MockObject\MockObject;
+use BluePsyduck\TestHelper\ReflectionTrait;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
 use stdClass;
@@ -32,7 +31,7 @@ class DynamicMapperAdapterTest extends TestCase
         $adapter = new DynamicMapperAdapter();
         $result = $adapter->getHandledMapperInterface();
 
-        $this->assertSame(DynamicMapperInterface::class, $result);
+        $this->assertEquals(DynamicMapperInterface::class, $result);
     }
 
     /**
@@ -42,9 +41,7 @@ class DynamicMapperAdapterTest extends TestCase
      */
     public function testAddMapper(): void
     {
-        /* @var DynamicMapperInterface&MockObject $mapper1 */
         $mapper1 = $this->createMock(DynamicMapperInterface::class);
-        /* @var DynamicMapperInterface&MockObject $mapper2 */
         $mapper2 = $this->createMock(DynamicMapperInterface::class);
 
         $adapter = new DynamicMapperAdapter();
@@ -64,7 +61,6 @@ class DynamicMapperAdapterTest extends TestCase
         $source = new stdClass();
         $destination = new stdClass();
 
-        /* @var DynamicMapperInterface&MockObject $mapper1 */
         $mapper1 = $this->createMock(DynamicMapperInterface::class);
         $mapper1->expects($this->once())
                 ->method('supports')
@@ -73,7 +69,6 @@ class DynamicMapperAdapterTest extends TestCase
         $mapper1->expects($this->never())
                 ->method('map');
 
-        /* @var DynamicMapperInterface&MockObject $mapper2 */
         $mapper2 = $this->createMock(DynamicMapperInterface::class);
         $mapper2->expects($this->once())
                 ->method('supports')
@@ -83,7 +78,6 @@ class DynamicMapperAdapterTest extends TestCase
                 ->method('map')
                 ->with($this->identicalTo($source), $this->identicalTo($destination));
 
-        /* @var DynamicMapperInterface&MockObject $mapper3 */
         $mapper3 = $this->createMock(DynamicMapperInterface::class);
         $mapper3->expects($this->never())
                 ->method('supports');
@@ -107,7 +101,6 @@ class DynamicMapperAdapterTest extends TestCase
         $source = new stdClass();
         $destination = new stdClass();
 
-        /* @var DynamicMapperInterface&MockObject $mapper1*/
         $mapper = $this->createMock(DynamicMapperInterface::class);
         $mapper->expects($this->once())
                ->method('supports')

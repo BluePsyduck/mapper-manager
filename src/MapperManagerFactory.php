@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace BluePsyduck\MapperManager;
 
+use BluePsyduck\MapperManager\Adapter\MapperAdapterInterface;
 use BluePsyduck\MapperManager\Constant\ConfigKey;
 use BluePsyduck\MapperManager\Exception\MapperException;
+use BluePsyduck\MapperManager\Mapper\MapperInterface;
 use Psr\Container\ContainerInterface;
 
 /**
@@ -49,7 +51,9 @@ class MapperManagerFactory
         array $config
     ): void {
         foreach (array_unique($config[ConfigKey::MAIN][ConfigKey::ADAPTERS] ?? []) as $alias) {
-            $manager->addAdapter($container->get($alias));
+            /** @var MapperAdapterInterface<MapperInterface<object, object>> $adapter */
+            $adapter = $container->get($alias);
+            $manager->addAdapter($adapter);
         }
     }
 

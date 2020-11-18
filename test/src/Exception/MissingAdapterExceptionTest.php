@@ -6,7 +6,6 @@ namespace BluePsyduckTest\MapperManager\Exception;
 
 use BluePsyduck\MapperManager\Exception\MissingAdapterException;
 use Exception;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -25,7 +24,6 @@ class MissingAdapterExceptionTest extends TestCase
     public function testConstruct(): void
     {
         $mapperClass = 'foo';
-        /* @var Exception&MockObject $previous */
         $previous = $this->createMock(Exception::class);
         $expectedMessage = 'No adapter has been added to handle the mapper foo.';
 

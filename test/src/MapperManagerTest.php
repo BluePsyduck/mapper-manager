@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace BluePsyduckTest\MapperManager;
 
-use BluePsyduck\Common\Test\ReflectionTrait;
 use BluePsyduck\MapperManager\Adapter\MapperAdapterInterface;
 use BluePsyduck\MapperManager\Exception\MapperException;
 use BluePsyduck\MapperManager\Exception\MissingAdapterException;
@@ -13,7 +12,7 @@ use BluePsyduck\MapperManager\Mapper\MapperInterface;
 use BluePsyduck\MapperManager\Mapper\StaticMapperInterface;
 use BluePsyduck\MapperManager\MapperManager;
 use BluePsyduck\MapperManager\MapperManagerAwareInterface;
-use PHPUnit\Framework\MockObject\MockObject;
+use BluePsyduck\TestHelper\ReflectionTrait;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
 use stdClass;
@@ -36,22 +35,14 @@ class MapperManagerTest extends TestCase
      */
     public function testAddAdapter(): void
     {
-        /* @var MapperAdapterInterface&MockObject $adapter1 */
         $adapter1 = $this->createMock(MapperAdapterInterface::class);
 
-        /* @var MapperAdapterInterface&MockObject $adapter2 */
         $adapter2 = $this->createMock(MapperAdapterInterface::class);
         $adapter2->expects($this->once())
                  ->method('getHandledMapperInterface')
                  ->willReturn('bar');
 
-        /* @var MapperManager&MockObject $manager */
-        $manager = $this->getMockBuilder(MapperManager::class)
-                        ->setMethods(['injectMapperManager'])
-                        ->getMock();
-        $manager->expects($this->once())
-                ->method('injectMapperManager')
-                ->with($this->identicalTo($adapter2));
+        $manager = new MapperManager();
         $this->injectProperty($manager, 'adapters', ['foo' => $adapter1]);
 
         $manager->addAdapter($adapter2);
@@ -66,21 +57,17 @@ class MapperManagerTest extends TestCase
      */
     public function testAddMapperWithHandlingAdapter(): void
     {
-        /* @var StaticMapperInterface&MockObject $mapper */
         $mapper = $this->createMock(StaticMapperInterface::class);
 
-        /* @var MapperAdapterInterface&MockObject $adapter1 */
         $adapter1 = $this->createMock(MapperAdapterInterface::class);
         $adapter1->expects($this->never())
                  ->method('addMapper');
 
-        /* @var MapperAdapterInterface&MockObject $adapter2 */
         $adapter2 = $this->createMock(MapperAdapterInterface::class);
         $adapter2->expects($this->once())
                  ->method('addMapper')
                  ->with($this->identicalTo($mapper));
 
-        /* @var MapperAdapterInterface&MockObject $adapter3 */
         $adapter3 = $this->createMock(MapperAdapterInterface::class);
         $adapter3->expects($this->never())
                  ->method('addMapper');
@@ -91,13 +78,7 @@ class MapperManagerTest extends TestCase
             StaticMapperInterface::class => $adapter3, // Second match will be ignored.
         ];
 
-        /* @var MapperManager&MockObject $manager */
-        $manager = $this->getMockBuilder(MapperManager::class)
-                        ->setMethods(['injectMapperManager'])
-                        ->getMock();
-        $manager->expects($this->once())
-                ->method('injectMapperManager')
-                ->with($this->identicalTo($mapper));
+        $manager = new MapperManager();
         $this->injectProperty($manager, 'adapters', $adapters);
 
         $manager->addMapper($mapper);
@@ -111,21 +92,13 @@ class MapperManagerTest extends TestCase
      */
     public function testAddMapperWithoutHandlingAdapter(): void
     {
-        /* @var MapperInterface&MockObject $mapper */
         $mapper = $this->createMock(MapperInterface::class);
 
-        /* @var MapperAdapterInterface&MockObject $adapter */
         $adapter = $this->createMock(MapperAdapterInterface::class);
         $adapter->expects($this->never())
                 ->method('addMapper');
 
-        /* @var MapperManager&MockObject $manager */
-        $manager = $this->getMockBuilder(MapperManager::class)
-                        ->setMethods(['injectMapperManager'])
-                        ->getMock();
-        $manager->expects($this->once())
-                ->method('injectMapperManager')
-                ->with($this->identicalTo($mapper));
+        $manager = new MapperManager();
         $this->injectProperty($manager, 'adapters', ['foo' => $adapter]);
 
         $this->expectException(MissingAdapterException::class);
@@ -144,21 +117,18 @@ class MapperManagerTest extends TestCase
         $source = new stdClass();
         $destination = new stdClass();
 
-        /* @var MapperAdapterInterface&MockObject $adapter1 */
         $adapter1 = $this->createMock(MapperAdapterInterface::class);
         $adapter1->expects($this->once())
                  ->method('map')
                  ->with($source, $destination)
                  ->willReturn(false);
 
-        /* @var MapperAdapterInterface&MockObject $adapter2 */
         $adapter2 = $this->createMock(MapperAdapterInterface::class);
         $adapter2->expects($this->once())
                  ->method('map')
                  ->with($source, $destination)
                  ->willReturn(true);
 
-        /* @var MapperAdapterInterface&MockObject $adapter3 */
         $adapter3 = $this->createMock(MapperAdapterInterface::class);
         $adapter3->expects($this->never())
                  ->method('map');
@@ -180,7 +150,6 @@ class MapperManagerTest extends TestCase
         $source = new stdClass();
         $destination = new stdClass();
 
-        /* @var MapperAdapterInterface&MockObject $adapter */
         $adapter = $this->createMock(MapperAdapterInterface::class);
         $adapter->expects($this->once())
                 ->method('map')
@@ -202,7 +171,6 @@ class MapperManagerTest extends TestCase
      */
     public function testInjectMapperManagerWithInterface(): void
     {
-        /* @var MapperManagerAwareInterface&MockObject $object */
         $object = $this->createMock(MapperManagerAwareInterface::class);
 
         $manager = new MapperManager();
@@ -221,7 +189,6 @@ class MapperManagerTest extends TestCase
      */
     public function testInjectMapperManagerWithoutInterface(): void
     {
-        /* @var MapperManagerAwareInterface&MockObject $object */
         $object = $this->createMock(stdClass::class);
 
         $manager = new MapperManager();

@@ -9,6 +9,10 @@ namespace BluePsyduck\MapperManager\Mapper;
  *
  * @author BluePsyduck <bluepsyduck@gmx.com>
  * @license http://opensource.org/licenses/GPL-3.0 GPL v3
+ *
+ * @template TSrc of object
+ * @template TDest of object
+ * @extends MapperInterface<TSrc, TDest>
  */
 interface DynamicMapperInterface extends MapperInterface
 {
@@ -18,5 +22,12 @@ interface DynamicMapperInterface extends MapperInterface
      * @param object $destination
      * @return bool
      */
-    public function supports($source, $destination): bool;
+    public function supports(object $source, object $destination): bool;
+
+    /**
+     * Maps the source object to the destination one.
+     * @param TSrc $source
+     * @param TDest $destination
+     */
+    public function map(object $source, object $destination): void;
 }

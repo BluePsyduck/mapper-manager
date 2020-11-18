@@ -11,20 +11,22 @@ use BluePsyduck\MapperManager\Mapper\MapperInterface;
  *
  * @author BluePsyduck <bluepsyduck@gmx.com>
  * @license http://opensource.org/licenses/GPL-3.0 GPL v3
+ *
+ * @template TMapper of MapperInterface<object, object>
  */
 interface MapperAdapterInterface
 {
     /**
      * Returns the mapper interface which this adapter will handle.
-     * @return string
+     * @return class-string<TMapper>
      */
     public function getHandledMapperInterface(): string;
 
     /**
      * Adds a mapper to the adapter.
-     * @param MapperInterface $mapper
+     * @param TMapper $mapper
      */
-    public function addMapper($mapper): void;
+    public function addMapper(MapperInterface $mapper): void;
 
     /**
      * Tries to map the source object into the destination one.
@@ -32,5 +34,5 @@ interface MapperAdapterInterface
      * @param object $destination
      * @return bool Whether the adapter was actually able to map the objects.
      */
-    public function map($source, $destination): bool;
+    public function map(object $source, object $destination): bool;
 }

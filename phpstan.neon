@@ -6,7 +6,6 @@ parameters:
 
   ignoreErrors:
     - '#Dynamic call to static method PHPUnit\\Framework\\.*#'
-    - '#Parameter \#1 \$mapper \(BluePsyduck\\MapperManager\\Mapper\\.*\) of method BluePsyduck\\MapperManager\\Adapter\\.*::addMapper\(\) should be contravariant with parameter \$mapper \(BluePsyduck\\MapperManager\\Mapper\\MapperInterface\) of method BluePsyduck\\MapperManager\\Adapter\\MapperAdapterInterface::addMapper\(\)#'
 
 includes:
   - vendor/phpstan/phpstan-phpunit/extension.neon

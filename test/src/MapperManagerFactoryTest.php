@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace BluePsyduckTest\MapperManager;
 
-use BluePsyduck\Common\Test\ReflectionTrait;
 use BluePsyduck\MapperManager\Adapter\MapperAdapterInterface;
 use BluePsyduck\MapperManager\Constant\ConfigKey;
 use BluePsyduck\MapperManager\Exception\MapperException;
@@ -12,7 +11,7 @@ use BluePsyduck\MapperManager\Mapper\MapperInterface;
 use BluePsyduck\MapperManager\MapperManager;
 use BluePsyduck\MapperManager\MapperManagerFactory;
 use BluePsyduck\MapperManager\MapperManagerInterface;
-use PHPUnit\Framework\MockObject\MockObject;
+use BluePsyduck\TestHelper\ReflectionTrait;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use ReflectionException;
@@ -37,16 +36,14 @@ class MapperManagerFactoryTest extends TestCase
     {
         $config = ['abc' => 'def'];
 
-        /* @var ContainerInterface&MockObject $container */
         $container = $this->createMock(ContainerInterface::class);
         $container->expects($this->once())
                   ->method('get')
                   ->with($this->identicalTo('config'))
                   ->willReturn($config);
 
-        /* @var MapperManagerFactory&MockObject $factory */
         $factory = $this->getMockBuilder(MapperManagerFactory::class)
-                        ->setMethods(['addAdaptersToManager', 'addMappersToManager'])
+                        ->onlyMethods(['addAdaptersToManager', 'addMappersToManager'])
                         ->getMock();
         $factory->expects($this->once())
                 ->method('addAdaptersToManager')
@@ -84,12 +81,9 @@ class MapperManagerFactoryTest extends TestCase
             ],
         ];
 
-        /* @var MapperAdapterInterface&MockObject $adapter1 */
         $adapter1 = $this->createMock(MapperAdapterInterface::class);
-        /* @var MapperAdapterInterface&MockObject $adapter2 */
         $adapter2 = $this->createMock(MapperAdapterInterface::class);
 
-        /* @var ContainerInterface&MockObject $container */
         $container = $this->createMock(ContainerInterface::class);
         $container->expects($this->exactly(2))
                   ->method('get')
@@ -102,7 +96,6 @@ class MapperManagerFactoryTest extends TestCase
                       $adapter2
                   );
 
-        /* @var MapperManager&MockObject $manager */
         $manager = $this->createMock(MapperManager::class);
         $manager->expects($this->exactly(2))
                 ->method('addAdapter')
@@ -132,12 +125,9 @@ class MapperManagerFactoryTest extends TestCase
             ],
         ];
 
-        /* @var MapperInterface&MockObject $mapper1 */
         $mapper1 = $this->createMock(MapperInterface::class);
-        /* @var MapperInterface&MockObject $mapper2 */
         $mapper2 = $this->createMock(MapperInterface::class);
 
-        /* @var ContainerInterface&MockObject $container */
         $container = $this->createMock(ContainerInterface::class);
         $container->expects($this->exactly(2))
                   ->method('get')
@@ -150,7 +140,6 @@ class MapperManagerFactoryTest extends TestCase
                       $mapper2
                   );
 
-        /* @var MapperManager&MockObject $manager */
         $manager = $this->createMock(MapperManager::class);
         $manager->expects($this->exactly(2))
                 ->method('addMapper')

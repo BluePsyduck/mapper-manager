@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace BluePsyduck\MapperManager;
 
 use BluePsyduck\MapperManager\Exception\MissingAdapterException;
-use BluePsyduck\MapperManager\Exception\MapperException;
 use BluePsyduck\MapperManager\Exception\MissingMapperException;
 use BluePsyduck\MapperManager\Adapter\MapperAdapterInterface;
 use BluePsyduck\MapperManager\Mapper\MapperInterface;
@@ -18,15 +17,12 @@ use BluePsyduck\MapperManager\Mapper\MapperInterface;
  */
 class MapperManager implements MapperManagerInterface
 {
-    /**
-     * The adapters of the manager.
-     * @var array|MapperAdapterInterface[]
-     */
-    protected $adapters;
+    /** @var array<class-string, MapperAdapterInterface<MapperInterface<object, object>>> */
+    protected $adapters = [];
 
     /**
-     * Adds a adapter to the manager.
-     * @param MapperAdapterInterface $adapter
+     * Adds an adapter to the mapper manager.
+     * @param MapperAdapterInterface<MapperInterface<object, object>> $adapter
      */
     public function addAdapter(MapperAdapterInterface $adapter): void
     {
@@ -34,11 +30,6 @@ class MapperManager implements MapperManagerInterface
         $this->adapters[$adapter->getHandledMapperInterface()] = $adapter;
     }
 
-    /**
-     * Adds a mapper to the manager.
-     * @param MapperInterface $mapper
-     * @throws MapperException
-     */
     public function addMapper(MapperInterface $mapper): void
     {
         $this->injectMapperManager($mapper);
@@ -52,29 +43,19 @@ class MapperManager implements MapperManagerInterface
         throw new MissingAdapterException(get_class($mapper));
     }
 
-    /**
-     * Maps the source object into the destination one.
-     * @param object $source
-     * @param object $destination
-     * @throws MapperException
-     */
-    public function map($source, $destination): void
+    public function map(object $source, object $destination): object
     {
         foreach ($this->adapters as $adapter) {
             $success = $adapter->map($source, $destination);
             if ($success) {
-                return;
+                return $destination;
             }
         }
 
         throw new MissingMapperException(get_class($source), get_class($destination));
     }
 
-    /**
-     * Injects the mapper manager if the object is accepting it.
-     * @param object $object
-     */
-    protected function injectMapperManager($object): void
+    private function injectMapperManager(object $object): void
     {
         if ($object instanceof MapperManagerAwareInterface) {
             $object->setMapperManager($this);
