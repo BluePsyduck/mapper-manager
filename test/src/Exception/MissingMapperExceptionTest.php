@@ -6,7 +6,6 @@ namespace BluePsyduckTest\MapperManager\Exception;
 
 use BluePsyduck\MapperManager\Exception\MissingMapperException;
 use Exception;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -26,7 +25,6 @@ class MissingMapperExceptionTest extends TestCase
     {
         $sourceClass = 'foo';
         $destinationClass = 'bar';
-        /* @var Exception&MockObject $previous */
         $previous = $this->createMock(Exception::class);
         $expectedMessage = 'No matching mapper can be found to map foo to bar.';
 

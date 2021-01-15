@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace BluePsyduckTest\MapperManager\Adapter;
 
-use BluePsyduck\Common\Test\ReflectionTrait;
 use BluePsyduck\MapperManager\Adapter\StaticMapperAdapter;
 use BluePsyduck\MapperManager\Mapper\StaticMapperInterface;
-use PHPUnit\Framework\MockObject\MockObject;
+use BluePsyduck\TestHelper\ReflectionTrait;
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
 use stdClass;
@@ -32,7 +31,7 @@ class StaticMapperAdapterTest extends TestCase
         $adapter = new StaticMapperAdapter();
         $result = $adapter->getHandledMapperInterface();
 
-        $this->assertSame(StaticMapperInterface::class, $result);
+        $this->assertEquals(StaticMapperInterface::class, $result);
     }
 
     /**
@@ -42,7 +41,6 @@ class StaticMapperAdapterTest extends TestCase
      */
     public function testAddMapper(): void
     {
-        /* @var StaticMapperInterface&MockObject $mapper1 */
         $mapper1 = $this->createMock(StaticMapperInterface::class);
         $mapper1->expects($this->once())
                 ->method('getSupportedSourceClass')
@@ -51,7 +49,6 @@ class StaticMapperAdapterTest extends TestCase
                 ->method('getSupportedDestinationClass')
                 ->willReturn('bar');
 
-        /* @var StaticMapperInterface&MockObject $mapper2 */
         $mapper2 = $this->createMock(StaticMapperInterface::class);
         $mapper2->expects($this->once())
                 ->method('getSupportedSourceClass')
@@ -83,7 +80,6 @@ class StaticMapperAdapterTest extends TestCase
         $source = new stdClass();
         $destination = new stdClass();
 
-        /* @var StaticMapperInterface&MockObject $mapper */
         $mapper = $this->createMock(StaticMapperInterface::class);
         $mapper->expects($this->once())
                ->method('map')
@@ -112,7 +108,6 @@ class StaticMapperAdapterTest extends TestCase
         $source = new stdClass();
         $destination = new stdClass();
 
-        /* @var StaticMapperInterface&MockObject $mapper */
         $mapper = $this->createMock(StaticMapperInterface::class);
         $mapper->expects($this->never())
                ->method('map');

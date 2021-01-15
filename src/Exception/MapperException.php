@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace BluePsyduck\MapperManager\Exception;
 
-use Throwable;
+use Exception;
 
 /**
- * The base exception interface thrown by the mapper manager.
+ * The base exception thrown by the mapper manager.
  *
  * @author BluePsyduck <bluepsyduck@gmx.com>
  * @license http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-interface MapperException extends Throwable
+class MapperException extends Exception
 {
 }

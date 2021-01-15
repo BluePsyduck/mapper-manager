@@ -10,13 +10,16 @@ namespace BluePsyduck\MapperManager\Mapper;
  * @author BluePsyduck <bluepsyduck@gmx.com>
  * @license http://opensource.org/licenses/GPL-3.0 GPL v3
  * @internal
+ *
+ * @template TSrc of object
+ * @template TDest of object
  */
 interface MapperInterface
 {
     /**
      * Maps the source object to the destination one.
-     * @param object $source
-     * @param object $destination
+     * @param TSrc $source
+     * @param TDest $destination
      */
-    public function map($source, $destination): void;
+    public function map(object $source, object $destination): void;
 }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace BluePsyduck\MapperManager\Exception;
 
-use InvalidArgumentException;
 use Throwable;
 
 /**
@@ -13,7 +12,7 @@ use Throwable;
  * @author BluePsyduck <bluepsyduck@gmx.com>
  * @license http://opensource.org/licenses/GPL-3.0 GPL v3
  */
-class MissingAdapterException extends InvalidArgumentException implements MapperException
+class MissingAdapterException extends MapperException
 {
     /**
      * Initializes the exception.
