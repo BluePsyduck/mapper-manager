@@ -15,6 +15,7 @@ manager to handle this type of mappers. New types can always be added in the cli
 
 If a mapper requires access to the `MapperManager` to e.g. map other objects, you have to implement the 
 `MapperManagerAwareInterface` to have it get injected into your mapper instance to avoid having circular dependencies. 
+You may use the `MapperManagerAwareTrait` to implement this interface with a simple setter method.
 
 ### Static Mapper
 
@@ -137,10 +138,10 @@ $mapperManager->addMapper(new ExampleDynamicMapper());
 $mapperManager->map($databaseItem, $responseItem);
 ``` 
 
-### Zend Expressive
+### Mezzio
 
-When using Zend Expressive, you can add the `ConfigProvider` of the library to your application config and access
-the already-initialized mapper manager through the container using `MapperManagerInterface::class` or
+When using Mezzio, you can add the `ConfigProvider` of the library to your application config and access the
+already-initialized mapper manager through the container using `MapperManagerInterface::class` or 
 `MapperManager::class` as alias.
 
 Add the following config to your project to customize the manager:
