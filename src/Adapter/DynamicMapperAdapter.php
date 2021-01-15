@@ -18,7 +18,7 @@ use BluePsyduck\MapperManager\Mapper\MapperInterface;
 class DynamicMapperAdapter implements MapperAdapterInterface
 {
     /** @var array<DynamicMapperInterface<object, object>> */
-    protected $mappers = [];
+    protected array $mappers = [];
 
     public function getHandledMapperInterface(): string
     {

@@ -20,7 +20,7 @@ class StaticMapperAdapter implements MapperAdapterInterface
     /**
      * @var array<class-string<object>, array<class-string<object>, StaticMapperInterface<object, object>>>
      */
-    protected $mappers = [];
+    protected array $mappers = [];
 
     public function getHandledMapperInterface(): string
     {

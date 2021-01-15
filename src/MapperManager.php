@@ -18,7 +18,7 @@ use BluePsyduck\MapperManager\Mapper\MapperInterface;
 class MapperManager implements MapperManagerInterface
 {
     /** @var array<class-string, MapperAdapterInterface<MapperInterface<object, object>>> */
-    protected $adapters = [];
+    protected array $adapters = [];
 
     /**
      * Adds an adapter to the mapper manager.

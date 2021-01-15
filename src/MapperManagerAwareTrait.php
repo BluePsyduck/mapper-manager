@@ -16,7 +16,7 @@ trait MapperManagerAwareTrait
      * The mapper manager.
      * @var MapperManagerInterface
      */
-    protected $mapperManager;
+    protected MapperManagerInterface $mapperManager;
 
     public function setMapperManager(MapperManagerInterface $mapperManager): void
     {
