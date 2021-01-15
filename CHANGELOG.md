@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.2.0 - 2020-01-15
+
+### Added
+
+- Support for PHP 8.
+- Generic doc-blocks to help with static analysers.
+- Return value to `MapperManagerInterface->map()`, which now returns the passed in `$destination` back. This allows for shorter code like `return $mapperManager->map($data, new Response());`.
+
+### Removed
+
+- Support for PHP 7.2 and 7.3.
+
 ## 1.1.1 - 2019-03-25
 
 ### Fixed
