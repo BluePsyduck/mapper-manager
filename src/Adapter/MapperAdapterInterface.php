@@ -12,7 +12,7 @@ use BluePsyduck\MapperManager\Mapper\MapperInterface;
  * @author BluePsyduck <bluepsyduck@gmx.com>
  * @license http://opensource.org/licenses/GPL-3.0 GPL v3
  *
- * @template TMapper of MapperInterface<object, object>
+ * @template TMapper of MapperInterface
  */
 interface MapperAdapterInterface
 {
