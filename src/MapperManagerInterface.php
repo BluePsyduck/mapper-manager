@@ -31,4 +31,14 @@ interface MapperManagerInterface
      * @return TDest
      */
     public function map(object $source, object $destination): object;
+
+    /**
+     * Maps a list of source objects to destination ones.
+     * @template TSrc of object
+     * @template TDest of object
+     * @param iterable<TSrc> $sources
+     * @param class-string<TDest>|callable(): TDest $destinationCreator
+     * @return array<TDest>
+     */
+    public function mapList(iterable $sources, string|callable $destinationCreator): array;
 }

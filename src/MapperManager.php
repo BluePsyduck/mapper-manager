@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BluePsyduck\MapperManager;
 
+use BluePsyduck\MapperManager\Exception\MapperException;
 use BluePsyduck\MapperManager\Exception\MissingAdapterException;
 use BluePsyduck\MapperManager\Exception\MissingMapperException;
 use BluePsyduck\MapperManager\Adapter\MapperAdapterInterface;
@@ -30,6 +31,9 @@ class MapperManager implements MapperManagerInterface
         $this->adapters[$adapter->getHandledMapperInterface()] = $adapter;
     }
 
+    /**
+     * @throws MapperException
+     */
     public function addMapper(MapperInterface $mapper): void
     {
         $this->injectMapperManager($mapper);
@@ -43,6 +47,9 @@ class MapperManager implements MapperManagerInterface
         throw new MissingAdapterException(get_class($mapper));
     }
 
+    /**
+     * @throws MapperException
+     */
     public function map(object $source, object $destination): object
     {
         foreach ($this->adapters as $adapter) {
@@ -53,6 +60,22 @@ class MapperManager implements MapperManagerInterface
         }
 
         throw new MissingMapperException(get_class($source), get_class($destination));
+    }
+
+    /**
+     * @throws MapperException
+     */
+    public function mapList(iterable $sources, callable|string $destinationCreator): array
+    {
+        if (is_string($destinationCreator)) {
+            $destinationCreator = fn() => new $destinationCreator();
+        }
+
+        $result = [];
+        foreach ($sources as $key => $source) {
+            $result[$key] = $this->map($source, $destinationCreator());
+        }
+        return $result;
     }
 
     private function injectMapperManager(object $object): void
