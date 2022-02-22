@@ -165,6 +165,71 @@ class MapperManagerTest extends TestCase
     }
 
     /**
+     * Tests the mapList method with a class name as creator.
+     * @throws MapperException
+     * @throws ReflectionException
+     * @covers ::mapList
+     */
+    public function testMapListWithClassName(): void
+    {
+        $source1 = new stdClass();
+        $source2 = new stdClass();
+
+        $adapter = $this->createMock(MapperAdapterInterface::class);
+        $adapter->expects($this->exactly(2))
+                ->method('map')
+                ->withConsecutive(
+                    [$this->identicalTo($source1), $this->isInstanceOf(stdClass::class)],
+                    [$this->identicalTo($source2), $this->isInstanceOf(stdClass::class)],
+                )
+                ->willReturn(true);
+
+        $manager = new MapperManager();
+        $this->injectProperty($manager, 'adapters', [$adapter]);
+
+        $result = $manager->mapList([$source1, $source2], stdClass::class);
+
+        $this->assertEquals([new stdClass(), new stdClass()], $result);
+    }
+
+    /**
+     * Tests the mapList method with a callback as creator.
+     * @throws MapperException
+     * @throws ReflectionException
+     * @covers ::mapList
+     */
+    public function testMapListWithCallback(): void
+    {
+        $source1 = new stdClass();
+        $source2 = new stdClass();
+        $destination1 = new stdClass();
+        $destination1->foo = 'bar';
+        $destination2 = new stdClass();
+        $destination2->foo = 'baz';
+
+        $destinations = [$destination1, $destination2];
+        $creator = function () use (&$destinations): stdClass {
+            return array_shift($destinations);
+        };
+
+        $adapter = $this->createMock(MapperAdapterInterface::class);
+        $adapter->expects($this->exactly(2))
+                ->method('map')
+                ->withConsecutive(
+                    [$this->identicalTo($source1), $this->identicalTo($destination1)],
+                    [$this->identicalTo($source2), $this->identicalTo($destination2)],
+                )
+                ->willReturn(true);
+
+        $manager = new MapperManager();
+        $this->injectProperty($manager, 'adapters', [$adapter]);
+
+        $result = $manager->mapList([$source1, $source2], $creator);
+
+        $this->assertEquals([$destination1, $destination2], $result);
+    }
+
+    /**
      * Tests the injectMapperManager method with implementing the interface.
      * @throws ReflectionException
      * @covers ::injectMapperManager
