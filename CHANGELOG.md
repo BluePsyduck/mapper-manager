@@ -1,12 +1,24 @@
 # Changelog
 
+## 1.3.0 - 2022-02-22
+
+### Added
+
+- Method `mapList` to the `MapperManager` and the `MapperManagerInterface`, which allows to map a list of sources at 
+- once.
+
+### Removed
+
+- Support for PHP 7.4. The minimal required version is now PHP 8.0.
+
 ## 1.2.0 - 2020-01-15
 
 ### Added
 
 - Support for PHP 8.
 - Generic doc-blocks to help with static analysers.
-- Return value to `MapperManagerInterface->map()`, which now returns the passed in `$destination` back. This allows for shorter code like `return $mapperManager->map($data, new Response());`.
+- Return value to `MapperManagerInterface->map()`, which now returns the passed in `$destination` back. This allows for 
+  shorter code like `return $mapperManager->map($data, new Response());`.
 
 ### Removed
 
